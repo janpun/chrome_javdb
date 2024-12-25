@@ -420,7 +420,7 @@ function searchPages(query) {
 document.addEventListener('DOMContentLoaded', function() {
   loadData();
   
-  // 添加查看数据按钮事件
+  // 导出数据按钮事件
   document.getElementById('viewDataButton').addEventListener('click', () => {
     chrome.storage.local.get(null, data => {
       // 创建 Blob
@@ -443,6 +443,45 @@ document.addEventListener('DOMContentLoaded', function() {
         URL.revokeObjectURL(url);
       }, 0);
     });
+  });
+
+  // 导入数据按钮事件
+  const importButton = document.getElementById('importDataButton');
+  const fileInput = document.getElementById('fileInput');
+
+  importButton.addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        chrome.storage.local.set(data, () => {
+          if (chrome.runtime.lastError) {
+            alert('导入失败：' + chrome.runtime.lastError.message);
+          } else {
+            alert('导入成功！');
+            loadData(); // 重新加载数据显示
+          }
+        });
+      } catch (error) {
+        alert('导入失败：文件格式不正确');
+        console.error('Import failed:', error);
+      }
+      fileInput.value = ''; // 清除文件选择
+    };
+
+    reader.onerror = () => {
+      alert('读取文件失败');
+      fileInput.value = '';
+    };
+
+    reader.readAsText(file);
   });
 
   // 为搜索框添加事件监听器
