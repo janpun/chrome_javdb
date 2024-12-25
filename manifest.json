@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "JavDB Tag Helper",
+  "version": "1.0",
+  "description": "Add tags to JavDB pages",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png"
+  },
+  "permissions": ["storage"],
+  "host_permissions": ["*://*.javdb.com/*"],
+  "action": {
+    "default_title": "JavDB Tag Helper"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAngPd67V4yWRug8efzEmv8Jx5IljuEuV8S92R3ho0kA3ZWb8GnVhCMjj/U6kBH2uflJdDzaRmrhGbRBKOnX+ZE6KB4sp3u8MYfOawsI6Yr2ulgVY6pMTg0PL8hXSSv5HfAJiN+faf/at9AXIalANrpQ8vfxVmkogJUnTfIz7X4Gih6DrvRLnQS/q0+g+/q2g4IoxgykCe743E9z6lbXaS6xQcX7PA6S7arY6BWmpSYj9a3LU4DCj+U99/pfX1hmjSdFe+BGrCOtJ1ZKD2uQMeYrj/s8Mc2kaYzAeEn4OcA7cfPwTMy8doTCe6iHNDTx+14pV7PtubYj+e5WQOfvGjjQIDAQAB",
+  "options_page": "background.html",
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.javdb.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
