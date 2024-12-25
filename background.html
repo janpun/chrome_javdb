@@ -215,9 +215,23 @@
       color: #666;
       user-select: none;
     }
+    .view-data-button {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      padding: 6px 12px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .view-data-button:hover {
+      background: #e0e0e0;
+    }
   </style>
 </head>
 <body>
+  <button class="view-data-button" id="viewDataButton">导出数据</button>
   <div class="container">
     <h1>标签管理</h1>
     <div class="search-container">

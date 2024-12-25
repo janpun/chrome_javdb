@@ -420,6 +420,31 @@ function searchPages(query) {
 document.addEventListener('DOMContentLoaded', function() {
   loadData();
   
+  // 添加查看数据按钮事件
+  document.getElementById('viewDataButton').addEventListener('click', () => {
+    chrome.storage.local.get(null, data => {
+      // 创建 Blob
+      const jsonString = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      
+      // 创建下载链接
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `javdb-data-${new Date().toISOString().split('T')[0]}.json`;
+      
+      // 触发下载
+      document.body.appendChild(a);
+      a.click();
+      
+      // 清理
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 0);
+    });
+  });
+
   // 为搜索框添加事件监听器
   const searchInput = document.getElementById('searchInput');
   if (searchInput) {
